@@ -1,0 +1,3 @@
+﻿  GetDisplayApp.cpp
+C:\src\win_monitor\GetDisplayApp\GetDisplayApp.cpp(40,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  GetDisplayApp.vcxproj -> C:\src\win_monitor\x64\Debug\GetDisplayApp.exe
