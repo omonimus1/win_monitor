@@ -1,19 +1,25 @@
 #include <Windows.h>
 #include <stdio.h>
+#include<iostream>
 
 void PrintDisplayDevice(DISPLAY_DEVICEA* displayDevice, const char* indent = "")
 {
+    if (! (displayDevice->StateFlags & DISPLAY_DEVICE_ACTIVE)) { 
+        std::cout << "SCREEN IS NOT ACTIVE";
+        return;
+    }
+
+
     printf("%sDeviceName: %s\n", indent, displayDevice->DeviceName);
-    //printf("%sDeviceString: %s\n", indent, displayDevice->DeviceString);
-    printf("%sStateFlags:", indent);
-    if (displayDevice->StateFlags & DISPLAY_DEVICE_PRIMARY_DEVICE) { printf("**THIS IS THE PRIMARY PRIMARY_DEVICE**"); }
-    if (displayDevice->StateFlags & DISPLAY_DEVICE_ACTIVE) { printf ("DISPLAY_DEVICE_ACTIVE specifies whether a monitor is presented as being on by the respective GDI view.Windows Vista : EnumDisplayDevices will only enumerate monitors that can be presented as being on."); }
-    //if (displayDevice->StateFlags & DISPLAY_DEVICE_MIRRORING_DRIVER) { printf(" MIRRORING_DRIVER"); }
-    //if (displayDevice->StateFlags & DISPLAY_DEVICE_MODESPRUNED) { printf(" MODESPRUNED"); }
-    //if (displayDevice->StateFlags & DISPLAY_DEVICE_REMOVABLE) { printf(" REMOVABLE"); }
-    //if (displayDevice->StateFlags & DISPLAY_DEVICE_VGA_COMPATIBLE) { printf(" VGA_COMPATIBLE"); }
-    printf("\n");
+    //printf("%sDeviceString: %s\n", indent, displayDevice->DeviceString);    
+    if (displayDevice->StateFlags & DISPLAY_DEVICE_PRIMARY_DEVICE) { printf("PRIMARY PRIMARY_DEVICE"); }
+    if (displayDevice->StateFlags & DISPLAY_DEVICE_ACTIVE) { printf ("DISPLAY_DEVICE_ACTIVE "); }
+    if (displayDevice->StateFlags & DISPLAY_DEVICE_MIRRORING_DRIVER) { printf(" MIRRORING_DRIVER"); }
+    if (displayDevice->StateFlags & DISPLAY_DEVICE_MODESPRUNED) { printf(" MODESPRUNED"); }
+    if (displayDevice->StateFlags & DISPLAY_DEVICE_REMOVABLE) { printf(" REMOVABLE"); }
+    if (displayDevice->StateFlags & DISPLAY_DEVICE_VGA_COMPATIBLE) { printf(" VGA_COMPATIBLE"); }
     //printf("%sDeviceID: %s\n", indent, displayDevice->DeviceID);
+    printf("\n");
 }
 
 void PrintDisplaySettings(DISPLAY_DEVICEA* displayDevice, const char* indent = "")
@@ -53,17 +59,17 @@ void main()
         displayDevice2.cb = sizeof(DISPLAY_DEVICEA);
         while (EnumDisplayDevicesA(displayDevice.DeviceName, j, &displayDevice2, 0))
         {
-            printf("\t======= Display Device %d,%d =======\n", i, j);
+            // printf("\t======= Display Device %d,%d =======\n", i, j);
             PrintDisplayDevice(&displayDevice2, "\t");
             // PrintDisplaySettings(&displayDevice2, "\t\t");
             j++;
         }
-        printf("\tTotal display outputs: %d\n", j);
+        // printf("\tTotal display outputs: %d\n", j);
         i++;
     }
     printf("Total display devices: %d\n", i);
 
     printf("Done.\n");
     printf("Press any key to quit... ");
-    getchar();
+    // getchar();
 }
